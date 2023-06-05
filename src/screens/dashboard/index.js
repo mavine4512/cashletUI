@@ -25,14 +25,13 @@ const data = [
     status: "finish goal",
   },
   {
-    id: 4,
+    id: 5,
     name: "Goal 2",
     amout: "12,000",
     status: "finish goal",
   },
 ];
 
-// function Dashboard() {
 class Dashboard extends React.Component {
   time = () => {
     let today = new Date();
@@ -79,10 +78,9 @@ class Dashboard extends React.Component {
             this.snackModal = ref;
           }}
         />
-
         <View style={styles.childContainer}>
           <Text style={styles.timeName}>
-            {this.time()} <Text style={styles.nameJo}>Jo</Text>
+            {this.time()} <Text style={styles.nameJo}>Mavine</Text>
           </Text>
           <Text style={styles.info}>{"Here's the latest"}</Text>
           <View style={styles.numbersContainer}>
@@ -99,7 +97,6 @@ class Dashboard extends React.Component {
           <View style={styles.dataContainer}>
             <Text style={styles.title}>Your goals</Text>
             <FlatList
-              testID="helpItemScroll"
               data={data}
               keyExtractor={(item) => item.id}
               showsVerticalScrollIndicator={false}
@@ -107,7 +104,7 @@ class Dashboard extends React.Component {
             />
             <TouchableOpacity
               onPress={() => {
-                this.snackModal.showModal();
+                this.snackModal.show();
               }}
               style={styles.snackbarContainer}
             >
