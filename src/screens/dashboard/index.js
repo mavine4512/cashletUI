@@ -15,19 +15,19 @@ const data = [
   {
     id: 2,
     name: "Goal 2",
-    amout: "12,000",
+    amout: "15,000",
     status: "finish goal",
   },
   {
     id: 4,
-    name: "Goal 2",
-    amout: "12,000",
+    name: "Goal 3",
+    amout: "10,000",
     status: "finish goal",
   },
   {
     id: 5,
-    name: "Goal 2",
-    amout: "12,000",
+    name: "Goal 4",
+    amout: "5,000",
     status: "finish goal",
   },
 ];
