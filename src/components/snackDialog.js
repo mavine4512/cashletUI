@@ -6,43 +6,52 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  SafeAreaView,
 } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 import * as Animatable from "react-native-animatable";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { grey_light, primary, white } from "../untilities/colors";
-import UserClicked from "./userClicked";
+import { white } from "../untilities/colors";
+
+let timeout;
 
 export default class SnackDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
-      isVisible: false,
+      isInitialText: true,
     };
   }
-  showModal = () => {
-    this.setState({ visible: true });
-  };
-  close = () => {
-    this.setState({ visible: false });
-  };
 
-  redirect = () => {
-    this.close();
-    this.clickedModal.showClickUserModal();
+  componentWillUnmount() {
+    clearInterval(timeout); // Clear the interval on component unmount
+  }
+  handleTimeout() {
+    let _this = this;
+
+    timeout = setTimeout(function () {
+      _this.setState({ visible: false });
+    }, 5000);
+  }
+
+  show() {
+    clearTimeout(timeout);
+    this.setState({ visible: true, isInitialText: true }, () => {
+      this.handleTimeout();
+    });
+  }
+
+  handleBannerTouch = () => {
+    clearTimeout(timeout);
+    this.setState({ isInitialText: false }, () => {
+      this.handleTimeout();
+    });
   };
 
   render() {
     return (
       <Modal visible={this.state.visible} transparent>
-        <UserClicked
-          ref={(ref) => {
-            this.clickedModal = ref;
-          }}
-        />
-        <SafeAreaView style={{ flex: 1 }}>
+        <TouchableWithoutFeedback onPressIn={this.handleBannerTouch}>
           <Animatable.View
             animation={"fadeInLeft"}
             duration={500}
@@ -51,15 +60,13 @@ export default class SnackDialog extends React.Component {
             <View style={styles.infoContainer}>
               <View style={styles.textContainer}>
                 <Text style={styles.actionText}>
-                  This ia an in-app notification snackbar to show to the user
-                  whenthey perform action.
-                  <Text onPress={() => this.redirect()}>
-                    Click it should change the text.
-                  </Text>
+                  {this.state.isInitialText
+                    ? "This is an in-app notification snackbar to show to the user when they perform an action. clicking it should change the text"
+                    : "User clicked snackbar"}
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() => this.close()}
+                onPress={() => this.setState({ visible: false })}
                 style={styles.containerIcon}
               >
                 <AntDesign
@@ -71,7 +78,7 @@ export default class SnackDialog extends React.Component {
               </TouchableOpacity>
             </View>
           </Animatable.View>
-        </SafeAreaView>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }

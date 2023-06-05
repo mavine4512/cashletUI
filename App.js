@@ -1,12 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import Main from "./src/Main";
+import Dashboard from "./src/screens/dashboard";
 
 const App = () => {
   return (
     <>
       <View>
-        <Main />
+        <Dashboard />
       </View>
     </>
   );
