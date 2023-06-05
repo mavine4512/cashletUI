@@ -57,26 +57,45 @@ export default class SnackDialog extends React.Component {
             duration={500}
             style={styles.container}
           >
-            <View style={styles.infoContainer}>
-              <View style={styles.textContainer}>
-                <Text style={styles.actionText}>
-                  {this.state.isInitialText
-                    ? "This is an in-app notification snackbar to show to the user when they perform an action. clicking it should change the text"
-                    : "User clicked snackbar"}
-                </Text>
+            {this.state.isInitialText ? (
+              <View style={styles.infoContainer}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.actionText}>
+                    This is an in-app notification snackbar to show to the user
+                    when they perform an action. Clicking it should change the
+                    text.
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => this.setState({ visible: false })}
+                  style={styles.containerIcon}
+                >
+                  <AntDesign
+                    size={25}
+                    style={styles.icon}
+                    name={"close"}
+                    type={"AntDesign"}
+                  />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => this.setState({ visible: false })}
-                style={styles.containerIcon}
-              >
-                <AntDesign
-                  size={25}
-                  style={styles.icon}
-                  name={"close"}
-                  type={"AntDesign"}
-                />
-              </TouchableOpacity>
-            </View>
+            ) : (
+              <View style={[styles.infoContainer, styles.userContainer]}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.actionText}>User clicked snackbar</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => this.setState({ visible: false })}
+                  style={styles.containerIcon}
+                >
+                  <AntDesign
+                    size={25}
+                    style={styles.icon}
+                    name={"close"}
+                    type={"AntDesign"}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
           </Animatable.View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -121,5 +140,8 @@ const styles = StyleSheet.create({
   userClickcontainer: {
     height: moderateScale(90),
     backgroundColor: "rgba(0,0,0,.5)",
+  },
+  userContainer: {
+    height: moderateScale(50),
   },
 });
